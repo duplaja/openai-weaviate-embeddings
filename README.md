@@ -12,7 +12,7 @@ Collection of tools for using OpenAI + Weaviate (vector DB) to create searchable
   
    **Note:** Some aspects of this class are immutable, so if you want to make a change, you're likely going to have to delete and re-create it, including re-inserting / vectorizing all data again. Make sure this is how you want, and test with a small dataset first.
 
-  **Note:** The module config back when we created the class is, as far as I know, immutable. If I find a way to change it, I'll update here. That means you're stuck with gpt-3.5-turbo or gpt-4, unless you pull the matching embeddings yourself and build the OpenAI query yourself (out of scope of this repo). Consider carefully, and I suggest testing with a smaller dataset.
+      **Note:** The module config back when we created the class is, as far as I know, immutable. If I find a way to change it, I'll update here. That means you're stuck with gpt-3.5-turbo or gpt-4, unless you pull the matching embeddings yourself and build the OpenAI query yourself (out of scope of this repo). Consider carefully, and I suggest testing with a smaller dataset.
 
 5) Insert some data. You'll want to [create objects and batch insert them.](https://weaviate.io/developers/weaviate/manage-data/import). See `chunk-for-vectors.py` for some code that takes a single text file, chunks it, and then inserts it into the database. As long as we have `text2vec-openai` module configured correctly (in docker-compose as DEFAULT_VECTORIZER_MODULE), OpenAI will automatically be called to embed / vectorize the data as it is inserted.
 

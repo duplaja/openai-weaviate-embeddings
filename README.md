@@ -1,4 +1,4 @@
-# Openai + Weaviate Embeddings
+# OpenAI + Weaviate Embeddings
 
 Collection of tools for using OpenAI + Weaviate (vector DB) to create searchable document databases.
 

@@ -19,7 +19,7 @@ result = (
   .with_generate(grouped_task=generateTask) #Used for Tasks (aggregate)
   #.with_generate(single_prompt=generatePrompt) #Used for Single Prompts (multiple)
   .with_near_text({
-    "concepts": ["being late","tardy"] #For now, I set these manually. Will come up with a better way of handling.
+    "concepts": ["being late","tardy"] #For now, I set these manually. Concepts to match in text chunks
   })
   .with_limit(10) #Set limit of chunks to return
 ).do()

@@ -29,6 +29,6 @@ result = (
 #print(json.dumps(result, indent=4))
 
 #For Tasks (aggregate). Might need to modify for Prompts
-response = result['data']['Get']['School'][0]["_additional"]['generate']['groupedResult'] 
+response = result['data']['Get'][classname][0]["_additional"]['generate']['groupedResult'] 
 
 print(response)

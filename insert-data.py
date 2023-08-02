@@ -3,6 +3,23 @@
 import weaviate
 from langchain.text_splitter import CharacterTextSplitter
 import json
+import time
+
+#From https://weaviate.io/developers/weaviate/modules/retriever-vectorizer-modules/text2vec-openai
+
+def callback(batch_results: dict) -> None:
+
+    #batch_size = 100    
+    batch_target_rate = 35 #may need to edit this
+
+    # you could print batch errors here
+    time_took_to_create_batch = client.batch.batch_size * (client.batch.creation_time/client.batch.recommended_num_objects)
+    
+    print(str(time_took_to_create_batch))
+    
+    time.sleep(
+        max(client.batch.batch_size/batch_target_rate - time_took_to_create_batch + 1, 0)
+    )
 
 
 ## Loads single text file to variable.
@@ -25,6 +42,7 @@ client = weaviate.Client(
     url="http://0.0.0.0:9000",  # Replace with your endpoint
 )
 
+startTime = time.time()
 
 classname = "School" #Set to the classname you created previously.
 
@@ -34,7 +52,11 @@ docs = chunk_text(text)
 
 with client.batch(
     batch_size=100,  # Specify the batch size
-    num_workers=2,   # Parallelize the process
+    num_workers=2,
+    timeout_retries=5,
+    dynamic=True,
+    callback=callback,
+    
 ) as batch:
 
     for document in docs:
@@ -54,3 +76,9 @@ with client.batch(
             classname,
             # tenant="tenantA"  # If multi-tenancy is enabled, specify the tenant to which the object will be added.
         )
+
+result = client.query.aggregate(classname).with_meta_count().do()
+print(result)
+
+executionTime = (time.time() - startTime)
+print('Execution time in seconds: ' + str(executionTime))

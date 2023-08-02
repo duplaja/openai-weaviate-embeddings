@@ -9,17 +9,17 @@ import time
 
 def callback(batch_results: dict) -> None:
 
-    #batch_size = 100    
-    batch_target_rate = 35 #may need to edit this
+    batch_target_rate = 100 #may have to modify this
 
     # you could print batch errors here
     time_took_to_create_batch = client.batch.batch_size * (client.batch.creation_time/client.batch.recommended_num_objects)
     
-    print('.',end="")
+    print('.',end="", flush=True)
     
     time.sleep(
-        max(client.batch.batch_size/batch_target_rate - time_took_to_create_batch + 1, 0)
+        max(client.batch.batch_size/batch_target_rate - time_took_to_create_batch + 0.5, 0)
     )
+
 
 
 ## Loads single text file to variable.

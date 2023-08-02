@@ -15,7 +15,7 @@ def callback(batch_results: dict) -> None:
     # you could print batch errors here
     time_took_to_create_batch = client.batch.batch_size * (client.batch.creation_time/client.batch.recommended_num_objects)
     
-    print(str(time_took_to_create_batch))
+    print('...')
     
     time.sleep(
         max(client.batch.batch_size/batch_target_rate - time_took_to_create_batch + 1, 0)
